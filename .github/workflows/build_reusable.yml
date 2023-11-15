@@ -91,6 +91,7 @@ jobs:
           curl -fsSL https://fnm.vercel.app/install | bash
           echo "$HOME/.local/share/fnm" >> $GITHUB_PATH
           $HOME/.local/share/fnm/fnm env >> $GITHUB_ENV
+          $HOME/.local/share/fnm/fnm env --json | jq -r '.FNM_MULTISHELL_PATH' >> $GITHUB_PATH
       - run: fnm use --install-if-missing ${{ inputs.nodeVersion || env.NODE_LTS_VERSION }}
       - run: node -v
       - run: corepack enable
