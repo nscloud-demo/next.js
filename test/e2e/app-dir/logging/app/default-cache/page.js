@@ -47,6 +47,32 @@ export default async function Page() {
     'https://next-data-api-endpoint.vercel.app/api/random?auto-cache'
   ).then((res) => res.text())
 
+  // the following fetch requests aren't rendered in UI, just asserted on in server logs
+  await fetch(
+    new Request(
+      'https://next-data-api-endpoint.vercel.app/api/random?request-input'
+    ),
+    {
+      next: {
+        revalidate: 3,
+      },
+    }
+  )
+
+  await fetch(
+    new Request(
+      'https://next-data-api-endpoint.vercel.app/api/random?request-input-cache-override',
+      {
+        cache: 'force-cache',
+      }
+    ),
+    {
+      next: {
+        revalidate: 3,
+      },
+    }
+  )
+
   return (
     <>
       <p>/force-cache</p>

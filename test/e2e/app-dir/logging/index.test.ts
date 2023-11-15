@@ -164,6 +164,41 @@ createNextDescribe(
           }, /success/)
         })
       }
+
+      describe('cache + revalidate warning', () => {
+        beforeAll(async () => {
+          await next.fetch('/default-cache')
+        })
+        it('should log when request input is a string', async () => {
+          await check(() => {
+            return next.cliOutput.includes(
+              'fetch for https://next-data-api-endpoint.vercel.app/api/random?revalidate-3-force-cache on /default-cache specified "cache: force-cache" and "revalidate: 3", only one should be specified'
+            )
+              ? 'success'
+              : 'fail'
+          }, 'success')
+        })
+
+        it('should log when request input is a Request instance', async () => {
+          await check(() => {
+            return next.cliOutput.includes(
+              'fetch for https://next-data-api-endpoint.vercel.app/api/random?request-input-cache-override on /default-cache specified "cache: force-cache" and "revalidate: 3", only one should be specified.'
+            )
+              ? 'success'
+              : 'fail'
+          }, 'success')
+        })
+
+        it('should not log when overriding cache within the Request object', async () => {
+          await check(() => {
+            return next.cliOutput.includes(
+              `fetch for https://next-data-api-endpoint.vercel.app/api/random?request-input on /default-cache specified "cache: default" and "revalidate: 3", only one should be specified.`
+            )
+              ? 'fail'
+              : 'success'
+          }, 'success')
+        })
+      })
     }
 
     describe('with verbose logging', () => {
