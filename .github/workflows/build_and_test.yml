@@ -5,6 +5,7 @@ on:
     branches: ['canary']
   pull_request:
     types: [opened, synchronize]
+  workflow_dispatch:
 
 env:
   NAPI_CLI_VERSION: 2.14.7
