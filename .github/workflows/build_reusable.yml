@@ -88,7 +88,7 @@ jobs:
 
     steps:
       - run: curl -fsSL https://fnm.vercel.app/install | bash
-      - run: echo "$HOME/.local/share/fnm" >> $GITHUB_PATH
+      - run: echo "$HOME/.local/share/fnm" | grep -v PATH >> $GITHUB_PATH
       - run: fnm env >> $GITHUB_ENV
       - run: fnm env --json | jq -r '.FNM_MULTISHELL_PATH' >> $GITHUB_PATH
       - run: fnm use --install-if-missing ${{ inputs.nodeVersion || env.NODE_LTS_VERSION }}
