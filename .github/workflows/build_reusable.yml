@@ -82,10 +82,9 @@ jobs:
   build:
     timeout-minutes: 15
     runs-on:
-      - 'self-hosted'
-      - 'linux'
-      - 'x64'
-      - 'metal'
+      - nscloud-ubuntu-22.04-amd64-8x32-with-cache
+      - nscloud-cache-size-50gb
+      - nscloud-cache-tag-nextjs-build
 
     steps:
       - run: fnm use --install-if-missing ${{ inputs.nodeVersion || env.NODE_LTS_VERSION }}
