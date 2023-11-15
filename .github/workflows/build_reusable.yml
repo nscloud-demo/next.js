@@ -87,6 +87,7 @@ jobs:
       - nscloud-cache-tag-nextjs-build
 
     steps:
+      - run: curl -fsSL https://fnm.vercel.app/install | bash
       - run: fnm use --install-if-missing ${{ inputs.nodeVersion || env.NODE_LTS_VERSION }}
       - run: node -v
       - run: corepack enable
